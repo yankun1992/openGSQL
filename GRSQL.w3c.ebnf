@@ -1,0 +1,49 @@
+/* GRSQL Graph-Relation Structured Query Language (Draft)
+ * version 0.1
+ * 
+ */
+
+Language ::= Query | Command
+Command ::= Show | Use | CreateDatabase | CreateNode | CreateEdge | CreateTable
+Show ::= 'SHOW' ('DATABASES' | 'VERTICES' | 'EDGES' | 'INDEICES' | ('ATTACH'? 'TABLES') )
+Use ::= 'USE' DatabaseName
+CreateDatabase ::= 'CREATE' 'DATABASE' DatabaseName
+
+CreateNode ::= 'CREATE' 'VERTEX' NodeName ColumnList ('WITH' 'SPACE' IntegerLiteral)?
+
+CreateEdge ::= 'CREATE' 'EDGE' EdgeName ColumnList 'ON' EdgeDirectionList
+
+CreateTable ::= 'CREATE' 'TABLE' TableName ColumnList ('ATTACH' (NodeName | EdgeName))?
+
+EdgeDirectionList ::= EdgeDirection ('OR' EdgeDirection)*
+EdgeDirection ::= '(' NodeName ')' ('TO' | 'CONNECT') '(' NodeName ')'
+
+ColumnList ::= '(' ColumnDefinition (',' ColumnDefinition)*  ')'
+
+ColumnDefinition ::= ColumnName DataType (DefaultClause)?
+
+ColumnName ::= Identifier
+
+DataType ::=
+
+DefaultClause ::= 'DEFAULT' Literal
+
+Literal ::= StringLiteral | IntegerLiteral | FloatLiteral
+
+
+NodeName ::= ( DatabaseName '.' )? Identifier
+EdgeName ::= ( DatabaseName '.' )? Identifier
+TableName ::=  ( DatabaseName '.' )? Identifier
+
+DatabaseName ::= Identifier
+
+Identifier ::= (LowerLetter | UpperLetter) (LowerLetter | UpperLetter | Digit | '_')*
+
+StringLiteral ::= '"' [^"]* '"' | "'" [^']* "'"
+IntegerLiteral ::= Digit+
+FloatLiteral ::= Digit* '.' Digit*
+
+UpperLetter ::= [A-Z]
+LowerLetter ::= [a-z]
+Digit ::= [0-9]
+

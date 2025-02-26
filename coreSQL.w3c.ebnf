@@ -1,0 +1,6 @@
+create-index-stmt ::= 'create' 'unique'? 'index' ('if' 'not' 'exists')? (schema-name '.')? index-name 'on' table-name '(' indexed-column (',' indexed-column)? ')' ('where' expr)
+indexed-column ::= (column-name | expr) ('collate' collate-name )? ('asc' | 'desc')?
+
+expr ::= literal-value | bind-parameter | column-path 
+literal-value ::= numeric-literal | string-literal | blob-literal | 'NULL' | 'TRUE' | 'FALSE' | 'CURRENT_TIME' | 'CURRENT_DATE' | 'CURRENT_TIMESTAMP'
+column-path ::= (schema-name '.')? (table-name '.')? column-name
